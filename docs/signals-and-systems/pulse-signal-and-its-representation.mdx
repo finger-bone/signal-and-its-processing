@@ -1,0 +1,238 @@
+---
+sidebar_position: 2
+---
+
+# Pulse Signal and Its Representation
+
+We are introducing pulse signal, which is a common function seen in the future.
+
+## Definition
+
+A pulse signal at time $0$ is written as,
+
+$$
+\delta(t)
+$$
+
+It is defined as a limit of any  distribution, that has a mean value of zero, and the chance of being non-zero is one.
+
+That is to say,
+
+$$
+\delta(t) = \lim_{\epsilon \to 0} \text{distribution}_\epsilon(t)
+$$
+
+Where $\epsilon$ is the chance of $t$ being non-zero.
+
+For example,
+
+$$
+\delta(t) := \lim_{\epsilon \to 0} \text{rect}_\epsilon(t)
+$$
+
+Where,
+
+$$
+\text{rect}_\epsilon(t) := \begin{cases}
+\frac{1}{2\epsilon} \quad ||t|| \leq 2\epsilon \\
+0 \; \text{otherwise}
+\end{cases} \quad \; s.t. \; \epsilon >0
+$$
+
+:::tip
+
+$\text{rect}_\epsilon$ is also called the gate function. It is a uniform distribution from $-\epsilon$ to $\epsilon$. Where $\epsilon > 0$.
+
+:::
+
+Or the gaussian distribution,
+
+$$
+\delta(t) := \lim_{\epsilon \to 0} \frac{1}{\sqrt{2\pi\epsilon^2}}e^{-\frac{t^2}{2\epsilon^2}}
+$$
+
+:::tip
+
+Whenever you need to prove some properties of a pulse signal, you must keep in mind that, $\delta$ is the limit of a probability distribution.
+
+:::
+
+:::note
+
+There are more than one ways to define a $\delta$ signal. We use the probability distribution as the definition. It can also be defined via test function.
+
+:::
+
+Obviously, $\delta(0) = +\infty$, and $\delta(t) = 0$ for $t \neq 0$.
+
+We often draw $\delta(t)$ signal as an arrow pointing upwards, with a height of 1.
+
+:::tip
+
+In a physical sense, the dimension is,
+
+$$
+[ \delta(t) ] = \frac{1}{[t]}
+$$
+
+:::
+
+## Properties
+
+### Even
+
+This is obvious because $\delta(t) = \delta(-t) = 0$ for $t \neq 0$.
+
+### Unit Area
+
+$$
+\int_{-\infty}^{+\infty} \delta(t) \mathrm{d}t = 1
+$$
+
+Because it is the limit of the Gaussian distribution, the area under the curve is 1.
+
+### Selective
+
+$$
+\int_{-\infty}^{+\infty} \delta(t-t_0) f(t) \mathrm{d}t = f(t_0)
+$$
+
+Consider,
+
+$$
+\int_{-\infty}^{+\infty} \delta(t) f(t) \mathrm{d}t = \mathbb{E}_{t \sim \delta(t)}(f(t)) = f(0)
+$$
+
+So the selectivity can be proved via substitution.
+
+### Derivative
+
+$$
+\int_{-\infty}^{+\infty} f(t) (\frac{\mathrm{d}}{\mathrm{d}t})^n \delta(t - t_0) \mathrm{d}t = (-1)^{n}((\frac{\mathrm{d}}{\mathrm{d}t})^n f(t))|_{t=t_0}
+$$
+
+This is easy from integration by parts. Consider,
+
+$$
+\int_{-\infty}^{+\infty} f(t) \frac{\mathrm{d}}{\mathrm{d}t} \delta(t - t_0) \mathrm{d}t \\
+= \int_{-\infty}^{+\infty} f(t) \mathrm{d} \delta(t - t_0) \\
+= (f(t) \delta(t - t_0))|^{+\infty}_{-\infty} - \int_{-\infty}^{+\infty} \frac{\mathrm{d}}{\mathrm{d}t} f(t) \delta(t - t_0) \mathrm{d}t \\
+= - (\frac{\mathrm{d}}{\mathrm{d}t} f(t))|_{t=t_0}
+$$
+
+This can be done recursively for the final result.
+
+### Scale
+
+$$
+\delta(\alpha t) = \frac{1}{||\alpha||} \delta(t)
+$$
+
+This is done by definition. Assume $\alpha > 0$,
+
+We first calculate the CDF for the distribution $\alpha t$,
+
+$$
+F(t')=P(\alpha t \leq t') = P(t \leq \frac{t'}{\alpha}) \\
+= \int_{-\infty}^{\frac{t'}{\alpha}} \text{distribution}_{\epsilon}(t) \mathrm{d}t
+$$
+
+Because the derivative of CDF is a PDF, so,
+
+$$
+p(t') = \frac{1}{\alpha}\text{distribution}_{\epsilon}(t)
+$$
+
+We enforce $\epsilon \to 0$, so,
+
+$$
+\delta(\alpha t) = \frac{1}{\alpha}\delta(t)
+$$
+
+If $\alpha < 0$, we can utilize the evenness of the delta function.
+
+### Decomposition
+
+If a polynomial $P(x)$ can be decomposed into product of linear terms $p_i = x_i - \zeta_i$.
+
+That is,
+
+$$
+P(x) = \prod_{i=0}^{i=n} p_i
+$$
+
+Then,
+
+$$
+\delta(P(x)) = \sum_{i=0}^{i=n} \frac{\delta(x_i - \zeta_i)}{||P'(\zeta_i)||}
+$$
+
+This is hard to prove directly, we use an indirect proof.
+
+Consider,
+
+$$
+\int_{-\infty}^{+\infty} \delta(P(x)) f(x) dx
+$$
+
+Because in most of the space, $\delta(P(x))$ is zero. We can make that into,
+
+$$
+\sum_{i=0}^{i=n}\int_{\zeta_i-\epsilon_i}^{\zeta_i+\epsilon_i} \delta(P(x)) f(x) dx
+$$
+
+We can use substitution if we assume $\epsilon_i \to 0$. That is to say, we can perceive $P(x)$ as locally linear, so,
+
+$$
+dx = \frac{1}{||P'(\zeta_i)||}dP(x)
+$$
+
+So,
+
+$$
+\int_{-\infty}^{+\infty} \delta(P(x)) f(x) dx \\
+= \sum_{i=0}^{i=n}\int_{\zeta_i-\epsilon_i}^{\zeta_i+\epsilon_i} \delta(P(x)) f(x) dx\\
+= \sum_{i=0}^{i=n}\int_{\zeta_i-\epsilon_i}^{\zeta_i+\epsilon_i} \frac{1}{||P'(\zeta_i)||} \delta(P(x)) f(x) dP(x) \\ 
+= \sum_{i=0}^{i=n} \frac{f(\zeta_i)}{||P'(\zeta_i)||} 
+$$
+
+Which is equivalent to,
+
+$$
+\delta(P(x)) = \sum_{i=0}^{i=n} \frac{\delta(x_i - \zeta_i)}{||P'(\zeta_i)||}
+$$
+
+## Integration
+
+If we integrate $\delta(t)$, we get a step function,
+
+:::info
+
+By integrate, we will always mean a definite integral from $-\infty$ to a variable. So that integrating a function yields another function.
+
+:::
+
+$$
+u(t) := \int_{-\infty}^{t} \delta(\tau) d\tau
+$$
+
+Or, alternatively,
+
+$$
+u(t) = \begin{cases}
+    0 & \text{if } t < 0 \\
+    1 & \text{if } t \geq 0
+\end{cases}
+$$
+
+The step function is a common function seen in the future.
+
+:::info
+
+It is obvious that,
+
+$$
+\text{rect}_\epsilon(t) = u(\epsilon + t) - u(\epsilon - t)
+$$
+
+:::

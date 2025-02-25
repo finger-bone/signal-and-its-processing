@@ -1,0 +1,133 @@
+---
+sidebar_position: 1
+---
+
+# System Time Domain Properties
+
+When we say time domain, we mean that we look at the signal with its original form. The variable may not necessarily be time. It can also be space or even frequency. It is just how we are analyzing the signal.
+
+## Definitions
+
+### Casual System
+
+Casual System is a system that does not entail the future state of the signal.
+
+For example,
+
+$$
+\mathcal{S}(x(t)) = x(t) + x(t-1)
+$$
+
+is casual, whereas,
+
+$$
+\mathcal{S}(x(t)) = x(t) + x(t+1)
+$$
+
+:::tip
+
+When we use time as the variable, it may seem a bit strange. But non-casual system is common in cases like image processing.
+
+:::
+
+### Linear Systems
+
+A linear system is a system that satisfy,
+
+$$
+\mathcal{S}(\alpha x + \beta y) = \alpha \mathcal{S}(x) + \beta \mathcal{S}(y)
+$$
+
+### Time Invariant Systems
+
+A time invariant system is a system that satisfy,
+
+$$
+\mathcal{S}(x(\tau-a)) = \mathcal{S}(x(t))|_{t=\tau-a}
+$$
+
+### LTI
+
+We almost only focus on LTI, linear and time invariant systems.
+
+## Typical LTI Systems
+
+- Delay or Shift $\mathcal{S}(x(t)) = x(t-a)$
+- Scale or Amplify $\mathcal{S}(x(t)) = \alpha x(t)$
+- Integration $\mathcal{S}(x(t)) = \int_{-\infty}^t x(\tau) d\tau$
+- Differentiation $\mathcal{S}(x(t)) = \frac{\mathrm{d}}{\mathrm{d}t} x(t)$
+
+## System Time Domain Analysis
+
+### Convolution
+
+Convolution is a very important operation in time domain analysis. 
+
+Defined as,
+
+$$
+x(t) \ast y(t) = \int_{-\infty}^{+\infty} x(\tau) y(t - \tau) d\tau
+$$
+
+Convolution is a linear operation to both of the signals.
+
+It is also symmetric for both of the signals.
+
+It is also associative.
+
+The above three properties are obvious.
+
+### Convolution is a LTI System
+
+Consider a system,
+
+$$
+\mathcal{S}(x(t)) = x(t) \ast y(t)
+$$
+
+because convolution is linear, the system is also linear. You can also prove that the system is time invariant.
+
+### Impulse Response
+
+We define,
+
+$$
+\mathcal{S}(\delta(t)) = h(t)
+$$
+
+As the impulse response of the system.
+
+This is important because, let's consider convolution for $\delta(t)$,
+
+$$
+\delta(t) \ast y(t) = \int_{-\infty}^{+\infty} \delta(\tau) y(t - \tau) d\tau = y(t)
+$$
+
+And because convolution is linear, so,
+
+$$
+\mathcal{S}(\delta(t)) \ast y(t) = h(t) \ast y(t)
+$$
+
+This is why $h(t)$ is also called the system response function in time domain.
+
+The above equation tells us that every LTI system has a unique $h(t)$ that can fully describe the behavior of the system.
+
+### System Response of Typical LTI System
+
+- Delay or Shift $\mathcal{S}(x(t)) = x(t-a)$, $h(t) = \delta(t-a)$
+- Scale or Amplify $\mathcal{S}(x(t)) = \alpha x(t)$, $h(t) = \alpha \delta(t)$
+- Integration $\mathcal{S}(x(t)) = \int_{-\infty}^t x(\tau) d\tau$, $h(t) = u(t)$
+- Differentiation $\mathcal{S}(x(t)) = \frac{\mathrm{d}}{\mathrm{d}t} x(t)$, $h(t) = -\delta'(t)$
+
+If we combine two systems, by cascading,
+
+$$
+\mathcal{S_1}(\mathcal{S_2}(x(t)))
+$$
+
+Then the system response is,
+
+$$
+h_1(t) \ast h_2(t)
+$$

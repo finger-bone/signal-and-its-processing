@@ -1,0 +1,86 @@
+---
+sidebar_position: 2
+---
+
+# Fourier Transform Properties
+
+Last section we calculated some fourier transform. Now we can have some useful properties.
+
+Let's put the formula here,
+
+
+$$
+F(\omega) = \int_{-\infty}^{+\infty} f(t) e^{-j \omega t} \mathrm{d}t
+$$
+
+And reversely,
+
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega) e^{j \omega t} \mathrm{d}\omega
+$$
+
+## Linear
+
+Because, integrate is linear, thus fourier transform is linear.
+
+That is to say,
+
+$$
+af(t) + bg(t) \xrightarrow{\mathcal{F}} aF(\omega) + bG(\omega)
+$$
+
+## Duality
+
+If we assume,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+Let's consider the fourier transform of $F(t)$.
+
+$$
+F^*(\omega) = \int_{-\infty}^{+\infty} F(t) e^{-j \omega t} \mathrm{d}t
+$$
+
+We also know that,
+
+$$
+f(t) = \frac{1}{2\pi}\int_{-\infty}^{+\infty} F(\omega) e^{j \omega t} \mathrm{d} \omega
+$$
+
+We can switch $\omega$ and $t$,
+
+$$
+f(\omega) = \frac{1}{2\pi}\int_{-\infty}^{+\infty} F(t) e^{-j \omega t} \mathrm{d}t
+$$
+
+Then we replace $\omega$ with $-\omega$.
+
+$$
+f(-\omega) = \frac{1}{2\pi}\int_{-\infty}^{+\infty} F(t) e^{j \omega t} \mathrm{d}t
+$$
+
+Now look at,
+
+$$
+F^*(\omega) = \int_{-\infty}^{+\infty} F(t) e^{-j \omega t} \mathrm{d}t
+$$
+
+We can conclude that,
+
+$$
+F^*(\omega) = 2\pi f(-\omega)
+$$
+
+In all, if,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+Then,
+
+$$
+F(t) \xrightarrow{\mathcal{F}} 2\pi f(-\omega)
+$$

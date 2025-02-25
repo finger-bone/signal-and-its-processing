@@ -1,0 +1,224 @@
+---
+sidebar_position: 1
+---
+
+# Fourier Transform
+
+## Fourier Series
+
+We first introduce fourier series, where we decompose a periodic signal into a sum of sines and cosines.
+
+:::info
+
+We use the complex form of fourier series.
+
+Some book uses the triangular form of fourier series, that is,
+
+$$
+S(t) = \sum_{k=0}^{k=+\infty} a_k \cos(2 \pi k t) + b_k \sin(2 \pi k t)
+$$
+
+:::
+
+Dirichlet tells us that, for a periodic signal, if, for any given $t_0$, $f(t_0-0)$ and $f(t_0+0)$ exists, and, there exists $\alpha > 0$ such that the following integration converges,
+
+$$
+\int_{0}^{\alpha} \frac{||f(t_0 + \tau) - f(t_0 + 0)||}{\tau} \mathrm{d} \tau
+$$
+
+$$
+\int_{0}^{\alpha} \frac{||f(t_0 + \tau) - f(t_0 - 0)||}{\tau} \mathrm{d} \tau
+$$
+
+Then there exists a way to use,
+
+$$
+S(t) = \sum_{k=-\infty}^{k=+\infty} a_i e^{j k \omega t}
+$$
+
+Where,
+
+$$
+\omega = \frac{2 \pi}{T}
+$$
+
+To express the periodic signal $f(t)$.
+
+Where,
+
+$$
+S(t_0) = \frac{1}{2} (f(t_0 + 0) + f(t_0 - 0))
+$$
+
+As for the coefficients, we can have
+$$
+\int_{0}^{T} e^{jp\omega t} e^{jq\omega t} \mathrm{d}t \\
+= \int_{0}^{T} e^{j(p+q)\omega t} \mathrm{d}t \\
+= \int_{0}^{T} \cos((p+q)\omega t) \mathrm{d}t + j \int_{0}^{T} \sin((p+q)\omega t) \mathrm{d}t \\
+= \begin{cases}
+0 & \text{if } p + q \neq 0 \\
+T & \text{if } p + q = 0
+\end{cases}
+$$
+
+So we can conclude that, the coefficients are,
+
+$$
+a_k = \frac{1}{T} \int_{0}^{T} f(t) e^{-j k \omega t} \mathrm{d}t
+$$
+
+This is the definition of fourier series.
+
+## Fourier Transform
+
+Non-periodic signals are just signals with infinite period. Previously, $a_i$ is how strong a signal is at a given frequency. Now we need to use its density, which we note as $F(\omega)$, so
+
+$$
+F(\omega) = \int_{-\infty}^{+\infty} f(t) e^{-j \omega t} \mathrm{d}t
+$$
+
+And reversely,
+
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega) e^{j \omega t} \mathrm{d}\omega
+$$
+
+This is the fourier transform.
+
+We can note,
+
+$$
+\mathcal{F}(f(t)) = F(\omega)
+$$
+
+Or,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+## Fourier Transform for Common Signals
+
+:::info
+
+Some integration doesn't converge, and we force them to be by using the cauchy principle, which is,
+
+$$
+P.V. \int_{-\infty}^{+\infty} f(t) e^{-j \omega t} \mathrm{d}t = \lim_{T \to +\infty} \int_{-T}^{+T} f(t) e^{-j \omega t} \mathrm{d}t
+$$
+
+However, this is sometimes also hard to calculate. We sometime also utilize the property that such functions are limits of other converge functions to get a value.
+
+:::
+
+### Delta Function
+
+$$
+\int_{-\infty}^{+\infty} \delta(t) e^{-j \omega t} \mathrm{d}t = 1
+$$
+
+$$
+\delta(t) \xrightarrow{\mathcal{F}} 1
+$$
+
+### Single Side Exponential Function
+
+$$
+\int_{-\infty}^{+\infty} e^{-\alpha t} e^{-j \omega t} u(t) \mathrm{d}t = \frac{1}{j \omega + \alpha}
+$$
+
+$$
+e^{-\alpha t} u(t) \xrightarrow{\mathcal{F}} \frac{1}{j \omega + \alpha}
+$$
+
+### Step Function
+
+Obviously,
+
+$$
+u(t) = \lim_{\alpha \to 0} e^{-\alpha t} u(t)
+$$
+
+So,
+
+$$
+u(t) \xrightarrow{\mathcal{F}} \frac{1}{j \omega}
+$$
+
+### Even Double Side Exponential Function
+
+$$
+\int_{-\infty}^{+\infty} (u(t)e^{-\alpha t} + u(-t)e^{\alpha t}) e^{-j \omega t} \mathrm{d}t \\= \frac{1}{\alpha + j\omega} + \frac{1}{\alpha - j\omega} = \frac{2 \alpha }{\alpha^2 + \omega^2}
+$$
+
+### Constant
+
+$$
+c = \lim_{\alpha \to 0} c(u(t)e^{-\alpha t} + u(-t)e^{\alpha t})
+$$
+
+We can prove that,
+
+$$
+\frac{\alpha }{\pi(\alpha^2 + \omega^2)}
+$$
+
+is a valid probability density.
+
+We can integrate it. You can either use the triangular function,
+
+$$
+\int_{-\infty}^{+\infty} \frac{\alpha }{\pi(\alpha^2 + \omega^2)} \mathrm{d} \omega \\
+= \int_{-\infty}^{+\infty} \frac{1}{\pi(1 + (\frac{\omega}{\alpha})^2)} d\frac{\omega}{\alpha} \\
+\overset{\tan \theta = \frac{\omega}{\alpha}}{=} \int_{-\frac{\pi}{2}}^{\frac{\pi}{2}} \frac{1}{\pi} d\theta = 1
+$$
+
+Or use the residual theorem,
+
+$$
+\int_{-\infty}^{+\infty} \frac{\alpha }{\pi(\alpha^2 + \omega^2)} \mathrm{d} \omega \\
+= \int_{-\infty}^{+\infty} \frac{1}{2\pi} (\frac{1}{\alpha - j\omega} + \frac{1}{\alpha + j \omega}) \mathrm{d} \omega \\
+= \frac{2\pi}{2\pi} = 1
+$$
+
+This is actually the Lorentzian Distribution.
+
+As $\alpha \to 0$,
+
+$$
+\lim_{\alpha \to 0} \frac{\alpha }{\pi(\alpha^2 + \omega^2)} = \begin{cases}
+0 & \omega \neq 0 \\
++\infty & \omega = 0
+\end{cases}
+$$
+
+That is to say,
+
+$$
+\lim_{\alpha \to 0} \frac{\alpha }{\pi(\alpha^2 + \omega^2)} = \delta(\omega)
+$$
+
+So,
+
+$$
+c \xrightarrow{\mathcal{F}} 2\pi c \delta(\omega)
+$$
+
+### Odd Double Side Fourier Transform
+
+
+$$
+\int_{-\infty}^{+\infty} (u(t)e^{-\alpha t} - u(-t)e^{\alpha t}) e^{-j \omega t} \mathrm{d}t \\= \frac{1}{\alpha + j\omega} - \frac{1}{\alpha - j\omega} = \frac{2 j\omega }{\alpha^2 + \omega^2}
+$$
+
+## Sign Function
+
+$$
+sgn(t) = \lim_{\alpha \to 0} (u(t)e^{-\alpha t} - u(-t)e^{\alpha t})
+$$
+
+Thus,
+
+$$
+sgn(t) \xrightarrow{\mathcal{F}} \frac{2 j }{\omega}
+$$

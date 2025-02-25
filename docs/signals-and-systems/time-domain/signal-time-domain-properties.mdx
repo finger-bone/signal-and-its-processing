@@ -1,0 +1,89 @@
+---
+sidebar_position: 2
+---
+
+# Signal Time Domain Properties
+
+## Casual Signal
+
+If a signal is only non-zero for $t \geq 0$, it is called a casual signal.
+
+## Periodic Signal
+
+If,
+
+$$
+f(t) = f(t + T)
+$$
+
+Where $T$ is the minimum positive number that makes this true.
+
+Then $f(t)$ is periodic with $T$.
+
+:::info
+
+For common signals like,
+
+$$
+f(t) = Re(e^{j\omega t})
+$$
+
+Obviously, the period is $\frac{2\pi}{\omega}$.
+
+However, consider the discreet signal,
+
+$$
+f[t] = Re(e^{j\omega t})
+$$
+
+Let's solve,
+
+$$
+\omega T = 2\pi k
+$$
+
+The $T$ doesn't guarantee to be $\frac{2\pi}{\omega}$. This is because in discreet signal, the minimum value of $T$ is one instead of zero.
+
+To solve the equation, obvious, $\omega$ must be a rational scale of $2\pi$, thus assum,
+
+$$
+\omega = 2\pi \frac{p}{q}
+$$
+
+Where $gcd(p, q) = 1$.
+
+Thus,
+
+$$
+T = \frac{qk}{p}
+$$
+
+So,
+
+$$
+T = q
+$$
+
+It is important to note that higher $\omega$ doesn't imply shorter $T$ for discrete signals.
+
+:::
+
+## Energy
+
+The energy of a signal is defined as,
+
+$$
+E = \int_{-\infty}^{+\infty} f(t)^2 \mathrm{d}t
+$$
+
+If the energy of a signal exists, it is called a energetic signal.
+
+## Power
+
+The power of a signal is defined as,
+
+$$
+P = \lim_{T \to +\infty} \frac{1}{2T} \int_{-T}^{+T} f(t)^2 \mathrm{d}t
+$$
+
+If the power of a signal exists, it is called a power signal.
