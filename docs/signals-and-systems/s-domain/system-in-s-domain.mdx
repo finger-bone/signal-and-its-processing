@@ -1,0 +1,165 @@
+---
+sidebar_position: 2
+---
+
+# System in S Domain
+
+We will say how Laplace transform solves the issue of jump value. But before that, we need some trivial work done.
+
+## System Response Function in S Domain
+
+Because fourier transform and laplace transform follows the same rule of convolution, and LTI system can always be described by the system impulse response, that is,
+
+$$
+y(t) = x(t) \ast h(t)
+$$
+
+Just like how we did with fourier transformation, we can use,
+
+$$
+Y(s) = X(s)H(s)
+$$
+
+$H(s)$ is the system response function in s domain.
+
+## Solving System in Differential Equation by Laplace Transform
+
+To describe this part in a more general way is hard. So let's only look at a system described by a differential equation of the second order. What we are introducing is valid for higher orders, it's just more complex.
+
+$$
+(aD^2+bD+c)y = x
+$$
+
+Now let's apply laplace transform. Please note that, for laplace transform, the derivative will result in an extra term.
+
+Since,
+
+$$
+Df \xrightarrow{\mathcal{L}} s L(s) - f(-0)
+$$
+
+Thus,
+
+$$
+D^2f = DDf \\
+\xrightarrow{\mathcal{L}} s(sL(s) - f(-0)) - f'(-0) \\
+= s^2 L(s) - sf(-0) - f'(-0)
+$$
+
+Put this into the original equation,
+
+$$
+as^2 Y(s) - asf(-0) - af'(-0) + b s Y(s) - bf(-0) + c Y(s) = X(s)
+$$
+
+Let's group them,
+
+$$
+(as^2 + bs + c) Y(s) = X(s) + asf(-0) + af'(-0) + bf(-0)
+$$
+
+We can tell that the right hand side is made up of two parts,
+
+$X(s)$ is the external input. Where as $asf(-0) + a'f(-0) + bf(-0)$ is caused by internal state.
+
+We treat both the external input and the internal state as the input of the system, so we can write,
+
+$$
+H(s) = \frac{1}{as^2 +bs+c}
+$$
+
+Due to the linearity, the solution is also in two parts,
+
+$$
+Y_{0s}(s) = \frac{X(s)}{as^2 +bs+c} \\
+Y_{0i}(s) = \frac{asf(-0) + af'(-0) + bf(-0)}{as^2 +bs+c}
+$$
+
+The $Y_{0s}(s)$ is the zero state response. Because it presumes $f^{(n)}(-0) = 0$.
+
+The $Y_{0i}(s)$ is the zero input response. Because it presumes $Y(s) = 0$.
+
+The final $Y(s) = Y_{0s}(s) + Y_{0i}(s)$. To get the time domain result, we simply perform a reverse laplace transform.
+
+Please note that this solution is only dependent on $f^{(n)}(-0)$. And thus there is no need to 
+
+:::info
+
+You can also do this separation in the time domain. It is just that it's not obvious.
+
+For a differential equation,
+
+$$
+P(D)y(t) = x(t)
+$$
+
+With initial values, $y^{(n)}(-0)$ given.
+
+If we presume $x(t) = 0$, the solution is the zero input response in the time domain, which is in pair with the zero input response in s domain. And vice versa for zero state response solved by letting $y^{(n)}(-0)=0$ instead of the given values.
+
+In the end, the solution is the sum of the two solutions.
+
+$$
+y(t) = y_{0s}(t) + y_{0i}(t)
+$$
+
+:::
+
+However, please note that, because we used single side laplace transformation, we can only solve the response from $-0$ to $+\infty$. So we have only $y(t)$ on the positive side.
+
+### Example
+
+If we choose,
+
+$$
+a = 1 \quad  b = 4 \quad c = 3 \quad f(-0) = 1 \quad f'(-0) =1 \quad x(t) = \delta(t) + u(t)
+$$
+
+We will have,
+
+$$
+X(s) = 1 + \frac{1}{s}
+$$
+
+Thus, for the zero state response,
+
+$$
+Y_{0s}(s) = \frac{1+\frac{1}{s}}{s^2 +4s+3} \\
+= \frac{s+1}{(s+3)(s+1)s} \\
+= \frac{1}{(s+3)(s+1)} \\
+= \frac{1}{2}(\frac{1}{s+1} - \frac{1}{s+3})
+$$
+
+Because,
+
+$$
+e^{-at} \xrightarrow{\mathcal{L}} \frac{1}{s+a}
+$$
+
+Thus, for the positive time,
+
+$$
+y_{0s}(t) = \frac{1}{2}(e^{-t} - e^{-3t})
+$$
+
+And for the zero input response,
+
+$$
+Y_{0i} = \frac{s+5}{s^2 + 4s + 3} \\
+= \frac{s+5}{(s+3)(s+1)} \\
+= \frac{2}{s+1} - \frac{1}{s+3}
+$$
+
+So,
+
+$$
+y_{0i} = 2 e^{-t} - e^{-3t}
+$$
+
+This is why laplace transform doesn't need a jump value- we only need the information at $-0$.
+
+:::note
+
+The example doesn't have any actual jump. If there was a jump value, it will came out as $u(t)$ after the reverse transformation.
+
+:::

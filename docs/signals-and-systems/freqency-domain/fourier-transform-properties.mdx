@@ -84,3 +84,157 @@ Then,
 $$
 F(t) \xrightarrow{\mathcal{F}} 2\pi f(-\omega)
 $$
+
+We've seen a real case before, that is,
+
+$$
+\delta(t) \xrightarrow{\mathcal{F}} 1
+$$
+
+And
+
+$$
+1 \xrightarrow{\mathcal{F}} 2\pi \delta(\omega)
+$$
+
+## Shifting Time is Shifting Phase
+
+Suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+Then,
+
+$$
+\int_{-\infty}^{+\infty} f(t - t_0) e^{-j\omega t} \mathrm{d} t \\
+= e^{-j\omega t_0} \int_{-\infty}^{+\infty} f(t - t_0) e^{-j\omega (t-t_0)} d(t - t_0) \\
+= e^{-j\omega t_0} F(\omega)
+$$
+
+Or,
+
+$$
+f(t-t_0) \xrightarrow{\mathcal{F}} e^{-j\omega t_0} F(\omega)
+$$
+
+## Shifting Phase is Shifting Frequency
+
+Suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+$$
+\int_{-\infty}^{+\infty} f(t) e^{-j\omega_0t} e^{-j\omega t} \mathrm{d} t \\
+= F(\omega + \omega_0) \\
+$$
+
+Or,
+
+$$
+f(t) e^{-j\omega_0t} \xrightarrow{\mathcal{F}} F(\omega + \omega_0)
+$$
+
+## Scale
+
+Suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+$$
+\int_{-\infty}^{+\infty} f(\alpha t) e^{-j\omega t} \mathrm{d}t \\
+= \frac{1}{||\alpha||} \int_{-\infty}^{+\infty} f(\alpha t) e^{-j \frac{\omega}{\alpha} \alpha|t} \mathrm{d} \alpha t \\
+= \frac{1}{||\alpha||} F(\frac{\omega}{\alpha})
+$$
+
+Or,
+
+$$
+f(\alpha t) \xrightarrow{\mathcal{F}} \frac{1}{||\alpha||} F(\frac{\omega}{\alpha})
+$$
+
+## Derivative
+
+Suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+Then,
+
+$$
+\int_{-\infty}^{+\infty} f'(t) e^{-j\omega t} \mathrm{d}t \\
+= -j\omega \int_{-\infty}^{+\infty} f(t) e^{-j\omega t} \mathrm{d}t \\
+= -j\omega F(\omega)
+$$
+
+Or,
+
+$$
+f'(t) \xrightarrow{\mathcal{F}} -j\omega F(\omega)
+$$
+
+## Integral
+
+Suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+Because,
+
+$$
+\int_{-\infty}^{+\infty} (\int_{-\infty}^{t}f(\tau)\mathrm{d}\tau) e^{-j\omega t} \mathrm{d}t \\
+= \int_{-\infty}^{+\infty} (\int_{-\infty}^{t}e^{-j\omega \tau}\mathrm{d}\tau) f(t) \mathrm{d}t
+= \frac{F(\omega)}{-j\omega}
+$$
+
+Or,
+
+$$
+\int_{-\infty}^{t}f(\tau) \mathrm{d}\tau \xrightarrow{\mathcal{F}} \frac{F(\omega)}{-j\omega}
+$$
+
+## Convolution
+
+Suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega) \\
+g(t) \xrightarrow{\mathcal{F}} G(\omega)
+$$
+
+Then,
+
+$$
+f(t) \ast g(t) = \int_{-\infty}^{+\infty} f(\tau) g(t - \tau) \mathrm{d}\tau
+$$
+
+$$
+\int_{-\infty}^{+\infty} (f(t) \ast g(t)) e^{-j\omega t}\mathrm{d}t \\
+= \int_{-\infty}^{+\infty} (\int_{-\infty}^{+\infty} f(\tau) g(t - \tau) \mathrm{d}\tau) e^{-j\omega t}\mathrm{d}t \\
+= \int_{-\infty}^{+\infty} (\int_{-\infty}^{+\infty} f(\tau) e^{-j\omega \tau} \mathrm{d}\tau) g(t-\tau) e^{-j \omega (t-\tau)} \mathrm{d}t \\
+= \int_{-\infty}^{+\infty} F(\omega) g(t-\tau) e^{-j \omega (t-\tau)} \mathrm{d}t \\ 
+= F(\omega)G(\omega)
+$$
+
+So,
+
+$$
+f(t) \ast g(t) \xrightarrow{\mathcal{F}} F(\omega)G(\omega)
+$$
+
+Similarly, we can prove,
+
+$$
+f(t)g(t) \xrightarrow{\mathcal{F}} \frac{1}{2\pi}F(\omega) \ast G(\omega)
+$$
+
+With fourier reverse transform.

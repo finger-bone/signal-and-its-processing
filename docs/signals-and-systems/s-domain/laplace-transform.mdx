@@ -1,0 +1,269 @@
+---
+sidebar_position: 1
+---
+
+# Laplace Transform and Its Properties
+
+The laplace transform is an extension to the fourier transform. Because for some common signals such as $u(t)$, the fourier transform does not converge.
+
+## Laplace Transform
+
+Laplace transform use $s = \sigma + j\omega$ to replace $j\omega$. So the transformation is.
+
+In signals and systems, we usually use single-side Laplace transform. This is because we don't usually care about the negative side.
+
+$$
+L(s) = \int_{-0}^{+\infty} f(t) e^{-st} \mathrm{d}t
+$$
+
+Please note that it is $-0$.
+
+And reversely,
+
+$$
+f(t) = \frac{1}{2\pi} \int_{\sigma-j\infty}^{\sigma+j\infty} L(s) e^{st} \mathrm{d}s
+$$
+
+This is the laplace reverse transform.
+
+It's obvious that laplace transform does not always converge. If we use single-side laplace transform, it is guaranteed to have the region of converge in form of,
+
+$$
+Re(s) > \sigma_0
+$$
+
+## Laplace Transform Properties
+
+In the following formula, unless the region of convergence is written, by default, it means that the region of convergence doesn't change.
+
+### Linear
+
+Laplace transformation is linear. However, we must find the intersection of the two regions of converge.
+
+$$
+af(t) + bg(t) \xrightarrow{\mathcal{L}} aL(s) + bL(s) \\
+Re(s) > \max(\sigma_a, \sigma_b)
+$$
+
+However, the region $Re(s) > \max(\sigma_a, \sigma_b)$ is the only part that guarantees convergence. In some case, the convergence may expand to the whole complex plane. For example, $f(t) - f(t)$.
+
+### Shifting Time is Shifting Phase
+
+$$
+f(t) \xrightarrow{\mathcal{L}} L(s)
+$$
+
+Then,
+
+$$
+\int_{-0}^{+\infty} f(t - t_0) u(t-t_0) e^{-st} \mathrm{d} t \\
+= e^{-st_0} \int_{-0}^{+\infty} f(t - t_0) e^{-s(t-t_0)} u(t-t_0) d(t - t_0) \\
+= e^{-st_0} L(s)
+$$
+
+Thus,
+
+$$
+f(t - t_0) u(t-t_0) \xrightarrow{\mathcal{L}} e^{-st_0} L(s)
+$$
+
+### Shifting Phase is Shifting Frequency
+
+$$
+f(t) \xrightarrow{\mathcal{L}} L(s)
+$$
+
+$$
+\int_{-0}^{+\infty} f(t) e^{-\alpha t} e^{-st} \mathrm{d}t \\
+= \int_{-0}^{+\infty} f(t) e^{-(\alpha + s)t} \mathrm{d}t \\
+= L(\alpha + s)
+$$
+
+Thus,
+
+$$
+f(t) e^{-\alpha t} \xrightarrow{\mathcal{L}} L(\alpha + s)
+$$
+
+### Scale
+
+$$
+f(t) \xrightarrow{\mathcal{L}} L(s) \\
+Re(s) > \sigma_0
+$$
+
+$$
+\int_{-0}^{+\infty} f(\alpha t) e^{-st} \mathrm{d}t \\
+= \frac{1}{\alpha} \int_{-0}^{+\infty} f(\alpha t) e^{-\frac{s}{\alpha} \alpha t } \mathrm{d}\alpha t \\
+= \frac{1}{\alpha} L(\frac{s}{\alpha})
+$$
+
+$\alpha$ must be positive because we use single-side laplace transform.
+
+Thus,
+
+$$
+f(\alpha t) \xrightarrow{\mathcal{L}} \frac{1}{\alpha} L(\frac{s}{\alpha})
+$$
+
+### Derivative
+
+$$
+f(t) \xrightarrow{\mathcal{L}} L(s)
+$$
+
+$$
+\int_{-0}^{+\infty} f'(t) e^{-st} \mathrm{d}t \\
+= -f(-0) + s \int_{-0}^{+\infty} f(t) e^{-st} \mathrm{d}t \\
+= s L(s) - f(-0)
+$$
+
+Thus,
+
+$$
+f'(t) \xrightarrow{\mathcal{L}} s L(s) - f(-0)
+$$
+
+### Integration
+
+$$
+f(t) \xrightarrow{\mathcal{L}} L(s)
+$$
+
+We note $F(t)$ as,
+
+$$
+F(t) = \int_{-\infty}^{t} f(\tau) \mathrm{d}\tau
+$$
+
+$$
+\int_{-0}^{+\infty} F(t) e^{-st} \mathrm{d}t \\
+= F(-0) + \frac{1}{s} \int_{-0}^{+\infty} f(t) e^{-st} \mathrm{d}t \\
+= \int_{-\infty}^{-0} f(t) \mathrm{d}t + \frac{L(s)}{s}
+$$
+
+Or,
+
+$$
+\int_{-\infty}^{t} f(\tau) \mathrm{d}\tau \xrightarrow{\mathcal{L}} \int_{-\infty}^{t} f(\tau) \mathrm{d}\tau + \frac{L(s)}{s}
+$$
+
+### Convolution
+
+The proof here is exactly the same, done by splitting $e^{-st}$ into the product of two parts. So we omit it here. We only need to know,
+
+$$
+f(t) \ast g(t) \xrightarrow{\mathcal{L}} L_f(s) L_g(s)
+$$
+
+### Initial and Final Value Theorems
+
+Consider,
+
+$$
+f(t) \xrightarrow{\mathcal{L}} L(s)
+$$
+
+$$
+\lim_{s \to +\infty} sL(s) \\
+= \lim_{s \to +\infty} \int_{-0}^{+\infty} f(t) se^{-st} \mathrm{d}t \\
+= \int_{-0}^{+\infty} f(t) \delta(t-0) \mathrm{d}t \\
+= f(+0)
+$$
+
+:::tip
+
+$se^{-st}$ for $s > 0$ is a valid PDF. It is obviously positive and,
+
+$$
+\int_{+0}^{+\infty} se^{-st} \mathrm{d}t = 1
+$$
+
+And the mean is,
+
+$$
+\int_{+0}^{+\infty} s t e^{-st} \mathrm{d}t = \frac{1}{s^2}
+$$
+
+Please note that this mean converge to positive zero. This distinguish is important.
+
+In addition that,
+
+$$
+\lim_{s \to +\infty} \frac{s}{e^{st}} = \begin{cases}
+0 & \text{if} \quad t > 0 \\
++\infty & \text{if} \quad t=0
+\end{cases}
+$$
+
+So,
+
+$$
+\lim_{s \to +\infty}se^{-st} = \delta(t-0)
+$$
+
+:::
+
+And, similarly
+
+$$
+\lim_{s \to +0} sL(s) \\
+= \lim_{s \to +0} \int_{-0}^{+\infty} f(t) se^{-st} \mathrm{d}t \\
+= \int_{+0}^{+\infty} f(t) \delta(t-\infty) \mathrm{d}t \\
+= f(+\infty)
+$$
+
+In all,
+
+$$
+\lim_{s \to +\infty} sL(s) = f(+0) \\
+\lim_{s \to +0} sL(s) = f(+\infty)
+$$
+
+:::info
+
+Another way to get the final result is,
+
+Consider the derivative property,
+
+$$
+f'(t) \xrightarrow{\mathcal{L}} sL(s) - f(-0)
+$$
+
+That is to say,
+
+$$
+sL(s) - f(-0) = \int_{-0}^{+\infty}f'(t) e^{-st} \mathrm{d}t \\
+= \int_{-0}^{+0} f'(t) e^{-st} + \int_{+0}^{+\infty}f'(t) e^{-st} \mathrm{d}t \\
+= f(+0) - f(-0) + \int_{+0}^{+\infty}f'(t) e^{-st} \mathrm{d}t 
+$$
+
+That is to say,
+
+$$
+sL(s) = f(+0) + \int_{+0}^{+\infty}f'(t) e^{-st} \mathrm{d}t
+$$
+
+So,
+
+$$
+\lim_{s \to +\infty} sL(s) = f(+0)
+$$
+
+And,
+
+$$
+\lim_{s \to +0} sL(s) = f(+\infty)
+$$
+
+:::
+
+## Laplace Transformation Table
+
+We will not calculate them here, but just list them. They are mostly the same as the fourier transform, except $j\omega$ is replaced by $s$. You also need to remember the region of convergence.
+
+| Original Function | Transformed Function | Region of Convergence |
+| --- | --- | --- |
+| $c$ | $-\frac{c}{s}$ | $Re(s)>0$ |
+| $e^{-at}$ | $\frac{1}{s+a}$ | $Re(s) > -a$ |
+| $\delta(t)$ | $1$ | Anywhere |

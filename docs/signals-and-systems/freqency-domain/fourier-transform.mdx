@@ -131,20 +131,6 @@ $$
 e^{-\alpha t} u(t) \xrightarrow{\mathcal{F}} \frac{1}{j \omega + \alpha}
 $$
 
-### Step Function
-
-Obviously,
-
-$$
-u(t) = \lim_{\alpha \to 0} e^{-\alpha t} u(t)
-$$
-
-So,
-
-$$
-u(t) \xrightarrow{\mathcal{F}} \frac{1}{j \omega}
-$$
-
 ### Even Double Side Exponential Function
 
 $$
@@ -211,7 +197,7 @@ $$
 \int_{-\infty}^{+\infty} (u(t)e^{-\alpha t} - u(-t)e^{\alpha t}) e^{-j \omega t} \mathrm{d}t \\= \frac{1}{\alpha + j\omega} - \frac{1}{\alpha - j\omega} = \frac{2 j\omega }{\alpha^2 + \omega^2}
 $$
 
-## Sign Function
+### Sign Function
 
 $$
 sgn(t) = \lim_{\alpha \to 0} (u(t)e^{-\alpha t} - u(-t)e^{\alpha t})
@@ -221,4 +207,63 @@ Thus,
 
 $$
 sgn(t) \xrightarrow{\mathcal{F}} \frac{2 j }{\omega}
+$$
+
+### Step Function
+
+
+:::tip
+
+You may think,
+
+$$
+u(t) = \lim_{\alpha \to 0} e^{-\alpha t} u(t)
+$$
+
+So,
+
+$$
+u(t) \xrightarrow{\mathcal{F}} \frac{1}{j \omega}
+$$
+
+This is wrong because, for integration that doesn't converge, we use the Cauchy Principal Value.
+
+However,
+
+$$
+P.V. \int_{-\infty}^{+\infty} e^{-j \omega t} u(t) \mathrm{d}t \neq \lim_{\alpha \to 0} \int_{+0}^{+\infty} e^{-\alpha t} e^{-j \omega t} \mathrm{d}t
+$$
+
+Since the integration doesn't approach two ends as the same speed.
+
+:::
+
+Because,
+
+$$
+u(t) = \frac{1}{2} + \frac{1}{2} sgn(t)
+$$
+
+And since integration is linear, the fourier transform should also be linear, and thus,
+
+$$
+u(t) \xrightarrow{\mathcal{F}} \pi \delta(t) + \frac{1}{j\omega}
+$$
+
+### Gate Function
+
+$$
+\int_{-\infty}^{+\infty} \text{rect}_{\epsilon}(t) e^{-j \omega t} \mathrm{d}t \\
+= \int_{-\epsilon}^{+\epsilon} \frac{1}{2\epsilon} e^{-j \omega t} \mathrm{d}t \\
+= -\frac{1}{2\epsilon} \int_{-j\omega\epsilon}^{+j\omega\epsilon} e^{-j \omega t} \mathrm{d}(-j\omega t) \\
+= \frac{1}{2\epsilon j \omega} (e^{j \omega \epsilon} - e^{-j \omega \epsilon}) \\
+= \frac{\sin(\omega \epsilon)}{\omega \epsilon}
+$$
+
+This function is important, of what we call $\text{sinc}(\omega t)$ function, $\text{Sample}(\omega t)$ or $\text{Sa}(\omega t)$.
+
+We define,
+
+$$
+\text{sinc}(t) = \frac{\sin(t)}{t}
 $$

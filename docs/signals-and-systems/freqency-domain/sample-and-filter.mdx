@@ -1,0 +1,45 @@
+---
+sidebar_position: 3
+---
+
+# Sample and Filter
+
+Sample and filter are two common operations. In this chapter, we introduce the basics of the two operations. For engineering details, please refer to the signal processing section of this note.
+
+## Sample
+
+Sample is the process of converting an analogs signal (continuous signal) to a digital signal (discreet signal).
+
+$$
+x[n] = x(nT)
+$$
+
+Where $T$ is called the sampling interval.
+
+Let's consider,
+
+$$
+S(t) = \sum_{n=-\infty}^{+\infty}\delta(t - nT)
+$$
+
+And instead of $x[n]$, we analyze the signal,
+
+$$
+x_s(t) = x(t) S(t)
+$$
+
+Because,
+
+$$
+x[n] = \int_{nT-0}^{(n+1)T-0} x_s(t) \mathrm{d}t
+$$
+
+We can analyze $x_s(t)$ instead of $x[n]$, which is easier to handle.
+
+According to fourier transform,
+
+$$
+x_s(t) \xrightarrow{\mathcal{F}} \frac{1}{2\pi} \mathcal{F}(x(t)) \ast \mathcal{F}(\sum_{n=-\infty}^{\infty}\delta(t - nT))
+$$
+
+TODO

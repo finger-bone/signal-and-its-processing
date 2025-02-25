@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# System by Differential Equation
+# System in Differential Equation
 
 Previously we introduced the properties of signals and systems in the time domain. Here we focus on a common case, where a system is defined by a differential equation and how can we solve them.
 
@@ -440,6 +440,24 @@ $$
 
 We can add these equations for the final result.
 
-Please note that the solution does not actually preserve how the $y$ behaves at $0$, but we don't really care about how infinite a infinite value at $0$ should be, so it's okay.
+Please note that the solution does not actually preserve how the $y$ behaves at $0$. That is, it is only correct for $t < 0$ and $t > 0$.
+
+If you want a solution that preserve the behavior at $0$, we need,
+
+$$
+D^2y_c+4Dy_c+3y_c = 9tu(t) - 28tu(t) - 21t^2u(t)
+$$
+
+Now the right han be solved using our previous method, so,
+
+$$
+y_c = \overline{y}(t) + y^*(t)
+$$
+
+We can safely conclude,
+
+$$
+y = \overline{y}(t) + y^*(t) +u(t)-3tu(t)+7t^2u(t)
+$$
 
 Now we can solve the respond function. For any system described by differential equation.
