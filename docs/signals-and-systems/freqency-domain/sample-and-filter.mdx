@@ -16,6 +16,60 @@ $$
 
 Where $T$ is called the sampling interval.
 
+### Fourier Transform on Periodic Signals
+
+Sometimes we may need to perform fourier transform on a periodic signal. However, the result isn't easy to get via normal means, because the you will see delta function in the result.
+
+We suppose,
+
+$$
+f(t) \xrightarrow{\mathcal{F}} F(\omega)
+$$
+
+We know that periodical signal can be expanded using fourier series,
+
+$$
+f(t) = \sum_{k=-\infty}^{+\infty} a_k e^{j k \Omega t}
+$$
+
+Where $\Omega = \frac{2\pi}{T}$.
+
+Since $\delta(t-a)f(t) = \delta(t-a)f(a)$,
+
+$$
+f(t) = \int_{-\infty}^{+\infty} (\sum_{n=-\infty}^{n=+\infty} a_n\delta(k - n)) e^{j k \Omega t} \mathrm{d}k
+$$
+
+We know that fourier reverse transform is,
+
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega) e^{j \omega t} \mathrm{d}\omega
+$$
+
+We consider fitting the above integration into this form,
+
+$$
+f(t) = \int_{-\infty}^{+\infty} (\sum_{n=-\infty}^{n=+\infty} a_n\delta(k - n)) e^{j k \Omega t} \mathrm{d}k \\
+= \int_{-\infty}^{+\infty} (\sum_{n=-\infty}^{n=+\infty} a_n\delta(\Omega k - \Omega n)) e^{j k \Omega t} \mathrm{d}(\Omega k) \\
+= \frac{1}{2\pi} \int_{-\infty}^{+\infty} (\sum_{n=-\infty}^{n=+\infty} 2\pi a_n \delta(\omega - \Omega n)) e^{j \omega t} \mathrm{d}\omega \\
+$$
+
+Since,
+
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega) e^{j \omega t} \mathrm{d}\omega
+$$
+
+We can conclude that,
+
+$$
+F(\omega) = \sum_{n=-\infty}^{n=+\infty} 2\pi a_n \delta(\omega - \Omega n)
+$$
+
+For periodical signals, we need to first do fourier series decomposition, then we can get the fourier transform result.
+
+### Sampling Process
+
 Let's consider,
 
 $$
@@ -36,10 +90,86 @@ $$
 
 We can analyze $x_s(t)$ instead of $x[n]$, which is easier to handle.
 
+Suppose,
+
+$$
+x(t) \xrightarrow{\mathcal{F}} X(\omega)
+$$
+
 According to fourier transform,
 
 $$
-x_s(t) \xrightarrow{\mathcal{F}} \frac{1}{2\pi} \mathcal{F}(x(t)) \ast \mathcal{F}(\sum_{n=-\infty}^{\infty}\delta(t - nT))
+x_s(t) \xrightarrow{\mathcal{F}} \frac{1}{2\pi} X(\omega) \ast \mathcal{F}(\sum_{n=-\infty}^{\infty}\delta(t - nT))
 $$
 
-TODO
+$\sum_{n=-\infty}^{\infty}\delta(t - nT)$ is periodical with $T$, thus if we want its fourier transform, we should firstly calculate the fourier series coefficients,
+
+Suppose, $\Omega = \frac{2\pi}{T}$,
+
+$$
+a_k = \frac{1}{T} \int_{-0}^{T-0} (\sum_{n=-\infty}^{\infty}\delta(t - nT)) e^{-j k \omega t} \mathrm{d}t \\
+= \frac{1}{T} \int_{-0}^{T-0} \delta(t) e^{-j k \omega t} \mathrm{d}t = \frac{1}{T}
+$$
+
+Previously, we had,
+
+$$
+F(\omega) = \sum_{n=-\infty}^{n=+\infty} 2\pi a_n \delta(\omega - \Omega n)
+$$
+
+Thus,
+
+$$
+\mathcal{F}(\sum_{n=-\infty}^{\infty}\delta(t - nT)) \\
+= \sum_{n=-\infty}^{n=+\infty} \frac{2\pi}{T} \delta(\omega - \Omega n) \\
+= \Omega \sum_{n=-\infty}^{n=+\infty} \delta(\omega - \Omega n) \\ 
+$$
+
+Initially, we wanted, 
+
+$$
+x_s(t) \xrightarrow{\mathcal{F}} \frac{1}{2\pi} X(\omega) \ast \mathcal{F}(\sum_{n=-\infty}^{\infty}\delta(t - nT))
+$$
+
+$$
+\mathcal{F}(x_s(t)) = \frac{1}{2\pi} X(\omega) \ast \mathcal{F}(\sum_{n=-\infty}^{\infty}\delta(t - nT)) \\
+= \frac{1}{2\pi} X(\omega) \ast (\Omega \sum_{n=-\infty}^{n=+\infty} \delta(\omega - \Omega n)) \\
+= \frac{1}{T} (\sum_{n=-\infty}^{n=+\infty} X(\omega - \Omega n)) 
+$$
+
+### Nyquist Theorem
+
+From the previous section, we know that the sampled signal in frequency domain is,
+
+$$
+\frac{1}{T} (\sum_{n=-\infty}^{n=+\infty} X(\omega - \Omega n)) 
+$$
+
+If the signal $x(t)$ is continuous (in real life, it usually is), there must exists a maximum frequency $\omega_m$ such that,
+
+$$
+X(\omega) = 0 \quad \forall \omega > \omega_m
+$$
+
+Consider,
+
+$$
+X(\omega - \Omega n)
+$$
+
+This spans across $\Omega n - \omega_m$ to $\Omega n + \omega_m$.
+
+If we want no overlapping at all, so that we can decompose $X(\omega)$, and further, revert back to the original signal. For all $n$, $X(\omega - \Omega n)$ shouldn't overlap each other. That is to say,
+
+$$
+\omega_m + \Omega n < -\omega_m + \Omega (n + 1)
+$$
+
+$$
+\Omega > 2 \omega_m
+$$
+
+$\Omega > 2 \omega_m$ is called the Nyquist theorem. It tells us that, if we want to flawlessly sample an analog signal, and the maximum frequency of the analog signal $\omega_m$, our sampling frequency must be greater than $2 \omega_m$.
+
+## Filter
+
