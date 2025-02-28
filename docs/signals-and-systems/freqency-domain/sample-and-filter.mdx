@@ -173,3 +173,54 @@ $\Omega > 2 \omega_m$ is called the Nyquist theorem. It tells us that, if we wan
 
 ## Filter
 
+I'll continue the section on Filters, maintaining the same technical and educational style:
+
+## Filter
+
+Filtering is a process of modifying or enhancing specific frequency components of a signal. Filters can be used to remove unwanted frequencies, enhance certain frequency bands, or modify the phase characteristics of a signal.
+
+### Basic Filter Types
+
+There are four fundamental types of filters:
+
+1. Low-pass Filter: Allows frequencies below a cutoff frequency to pass while attenuating higher frequencies
+2. High-pass Filter: Allows frequencies above a cutoff frequency to pass while attenuating lower frequencies
+3. Band-pass Filter: Allows frequencies within a specific range to pass while attenuating others
+4. Band-stop Filter: Blocks frequencies within a specific range while allowing others to pass
+
+### Transfer Function
+
+The transfer function H(ω) of a filter describes how the filter modifies the amplitude and phase of input frequencies. For a linear time-invariant system, we know that,
+
+$$
+Y(\omega) = H(\omega)X(\omega)
+$$
+
+### Ideal Filters
+
+An ideal filter has a perfect rectangular frequency response. For example, an ideal low-pass filter has the transfer function:
+
+$$
+H(\omega) = \begin{cases} 
+1, & |\omega| \leq \omega_c \\
+0, & |\omega| > \omega_c
+\end{cases}
+$$
+
+Where $\omega_c$ is the cutoff frequency.
+
+However, ideal filters are not physically realizable because:
+1. They require infinite impulse response
+2. They are not causal (require future inputs)
+3. They have perfect cutoff characteristics which violate the uncertainty principle
+
+### Practical Filters
+
+Real filters approximate ideal characteristics with:
+
+1. Passband: Frequency range where signals pass through with minimal attenuation
+2. Stopband: Frequency range where signals are heavily attenuated
+3. Transition band: Region between passband and stopband
+4. Ripple: Small variations in gain within passband or stopband
+
+We will introduce digital filters in detail in the signal processing part.

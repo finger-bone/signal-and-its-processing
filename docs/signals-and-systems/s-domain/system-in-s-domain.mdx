@@ -81,7 +81,15 @@ The $Y_{0i}(s)$ is the zero input response. Because it presumes $Y(s) = 0$.
 
 The final $Y(s) = Y_{0s}(s) + Y_{0i}(s)$. To get the time domain result, we simply perform a reverse laplace transform.
 
-Please note that this solution is only dependent on $f^{(n)}(-0)$. And thus there is no need to 
+Please note that this solution is only dependent on $f^{(n)}(-0)$. And thus there is no need to calculate the jump value.
+
+In addition, please note the fact that,
+
+$$
+Y(s) = Y_{0s}(s) + Y_{0i}(s)
+$$
+
+Is only valid for $t > -0$. We can't have any information for $t < -0$ because we use single side laplace transform. If we want the convergence of the single side, we lose half of the solution.
 
 :::info
 
@@ -157,9 +165,3 @@ y_{0i} = 2 e^{-t} - e^{-3t}
 $$
 
 This is why laplace transform doesn't need a jump value- we only need the information at $-0$.
-
-:::note
-
-The example doesn't have any actual jump. If there was a jump value, it will came out as $u(t)$ after the reverse transformation.
-
-:::
