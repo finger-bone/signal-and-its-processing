@@ -1,0 +1,271 @@
+---
+sidebar_position: 1
+---
+
+# Discrete Calculus
+
+In this chapter, we will introduce fourier transform for discrete signals.
+
+## Discrete Pulse Signal
+
+Similarly, we can define discrete signal. Unlike continuous signal, where pulse signal is a limit of any distribution, discrete signal is just a sequence of 0 and 1.
+
+$$
+\delta[n] = \begin{cases}
+    1 & \text{if } n = 0 \\
+    0 & \text{otherwise}
+\end{cases}
+$$
+
+Similarly, we use sum instead of integral. So,
+
+$$
+u[t] = \begin{cases}
+    0 & \text{if } t < 0 \\
+    1 & \text{if } t \geq 0
+\end{cases}
+$$
+
+Where,
+
+$$
+u[t] = \sum_{n=-\infty}^{t} \delta[n]
+$$
+
+## Discrete Convolution
+
+We simply replace the integral with sum,
+
+$$
+x[t] \ast y[t] = \sum_{n=-\infty}^{+\infty} x[n-t] y[n]
+$$
+
+## Discrete Calculus
+
+:::tip
+
+Discrete calculus is not a subject that mathematicians study a lot, so there isn't a unified notation or way to do it.
+
+There are more than one ways- wether focused on forward difference, backward difference, shifting forward, backward operator, etc. Using only one of them, we can build up a discrete calculus theory.
+
+For simplicity and convenience, we use both backward difference and shifting backward operators to build our theory.
+
+:::
+
+### Operators
+
+We note the backward shift as,
+
+$$
+\mathcal{B}(x[n]) = x[n-1]
+$$
+
+And difference (backward) as,
+
+$$
+\Delta x[n] = x[n] - x[n - 1]
+$$
+
+It's obvious that,
+
+$$
+\Delta = 1 - \mathcal{B}
+$$
+
+The eigen function of the $\mathcal{B}$  is $z^n$,
+
+$$
+\mathcal{B} z^n = \frac{1}{z} z^{n}
+$$
+
+And so is true for difference
+
+$$
+\Delta z^n = z^n - z^{n-1} = (1 - \frac{1}{z}) z^{n}
+$$
+
+The reverse of $\mathcal{B}$ is,
+
+$$
+\mathcal{B}^{-1} x[n] = x[n + 1]
+$$
+
+That is the moving-forward.
+
+Obviously, they are all linear operators.
+
+### Factorial Power Sequence
+
+There is also an important sequence, the (decrease) factorial power sequence,
+
+$$
+x^{\underline{n}} = x \cdot (x - 1) \cdot (x - 2) \cdot \cdots \cdot (x - n + 1)
+$$
+
+This is worthy of mentioning here since,
+
+$$
+\Delta z^{\underline{n}} =z^{\underline{n}} - z^{\underline{n-1}} \\
+= n (z - 1)^{\underline{n - 1}}
+$$
+
+Which corresponds to,
+
+$$
+Dx^n = nx^{n - 1}
+$$
+
+We can factor normal power into factorial power,
+
+$$
+z^n = \sum_{k=0}^{n} \genfrac{\{}{\}}{0pt}{}{n}{k} z^{\underline{k}}
+$$
+
+$\genfrac{\{}{\}}{0pt}{}{n}{k}$ is called the stirling number of the second kind.
+It satisfies,
+
+$$
+\genfrac{\{}{\}}{0pt}{}{n}{k} = \genfrac{\{}{\}}{0pt}{}{n-1}{k-1} + k\genfrac{\{}{\}}{0pt}{}{n-1}{k} \\
+\genfrac{\{}{\}}{0pt}{}{0}{m} = 1
+$$
+
+You don't need to remember those- we don't dive that deep. You can just have the following common formula,
+
+$$
+z^2 = z^{\underline{2}} + z^{\underline{1}} \\
+z^3 = z^{\underline{3}} + 3z^{\underline{2}} + z^{\underline{1}} \\
+$$
+
+### Product Rule of Difference
+
+Just like derivative, where,
+
+$$
+D(uv) = u D v + v D u
+$$
+
+We have,
+
+$$
+\Delta(x[n] y[n]) = x[n]y[n] - x[n-1]y[n-1] \\
+= x[n]y[n] - x[n]y[n-1] + x[n]y[n-1] - x[n-1]y[n-1] \\
+= x[n]\Delta y[n] + \mathcal{B} y[n] \Delta x[n]
+$$
+
+### Sum
+
+Sum corresponds to the integral.
+
+We define,
+
+$$
+X[n] = \sum x[k]
+$$
+
+Where,
+
+$$
+\Delta X[n] = x[n]
+$$
+
+Thus,
+
+$$
+X[n] = \Delta^{-1} x[n]
+$$
+
+Likewise, adding any constant $C$ won't change this property,
+
+$$
+X[n] + C = \sum x[n]
+$$
+
+:::tip
+
+Please note that,
+
+$$
+\frac{1}{\Delta} n^{\underline{p}} = \frac{1}{p + 1} (n + 1)^{\overline{p + 1}}
+$$
+
+:::
+
+In addition, we also have,
+
+$$
+X[b] - X[a] = \sum_{a}^{b} x[n] = \sum_{n=a}^{b} x[n] \quad b \geq a
+$$
+
+If $b < a$, then we have,
+
+$$
+\sum_{a}^{b} x[n] = -\sum_{b}^{a} x[n]
+$$
+
+Just like the integral, we have the sum by partition, what we call the Abel summation.
+
+Previous, we concluded,
+
+$$
+\Delta(x[n] y[n]) = x[n]\Delta y[n] + \mathcal{B} y[n] \Delta x[n]
+$$
+
+$$
+\sum_{a}^{b} x[n] \Delta y[n] \\
+=\sum_{a}^{b} (\Delta(x[n]y[n]) - \mathcal{B} y[n] \Delta x[n]) \\
+= (x[n]y[n])|_{a}^{b} - \sum_{a}^{b} \mathcal{B} y[n] \Delta x[n] \\
+$$
+
+That equals to say,
+
+$$
+\sum x[n]\Delta y[n] = x[n]y[n] - \sum \mathcal{B} y[n] \Delta x[n]
+$$
+
+For example, if we want,
+
+$$
+Y[n] = \sum_{0}^{n} z^2 2^z
+$$
+
+If you never learnt discrete calculus, it'd take some trick to get the result. But we can do it with brute force now,
+
+$$
+\sum z^2 2^z \\
+= \sum z^2 (2^{z+1} - 2^{z}) \\
+= \sum z^2 \Delta 2^{z+1} \\
+= z^2 2^{z+1} - \sum 2^z \Delta z^2 \\
+= z^2 2^{z+1} - \sum 2^z (2z - 1) \\
+= z^2 2^{z+1} - \sum (2z - 1) \Delta 2^{z+1} \\
+= 2^{z+1}(z^2 - 2z + 1) + \sum 2^{z + 1} \\
+= 2^{z+1}(z^2 - 2z + 3)
+$$
+
+Thus,
+
+$$
+Y[n] = 2^{n+1}(n^2 - 2n + 3) + C \\
+Y[0] = 6 + C = 0
+$$
+
+So,
+
+$$
+Y[n] = 2^{n+1}(n^2 - 2n + 3) - 6
+$$
+
+:::info
+
+Other methods to calculate the sum includes,
+
+Using shift-and-subtract method, that is,
+
+$$
+Y[n] - 2Y[n] = - z^2 2^{z+1} + \sum_{1}^{n} (z^2 - (z - 1)^2) 2^{z}
+$$
+
+And repeat it. This is just using Abel summation indirectly.
+
+Another trick is using z-transformation, a transform introduced alter. This trick equals to the method of generation function.
+
+:::

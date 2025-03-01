@@ -1,0 +1,223 @@
+---
+sidebar_position: 2
+---
+
+# Difference Equation
+
+Like continuous signal, there is a difference equation for discrete signal.
+
+It's often in form of,
+
+$$
+P(\mathcal{B})y[n] = x[n]
+$$
+
+However, in the signal analysis of continuous signals, we learnt that $P(D)^{-1}$ can be expanded into a infinite polynomial of $D$, can when applied to certain functions, $D$ would result in zero, and thus we can truncate the polynomial. However, $\mathcal{B}$ doesn't have such property.
+
+However, $\Delta$ has. $\Delta 1 = 0$. And better off, $\Delta = 1 - \mathcal{B}$, so we can always convert that equation into,
+
+$$
+P(\Delta)y[n] = x[n]
+$$
+
+## Eigen Decomposition
+
+Similarly, we can decompose the solution into eigen solution and special solution, that is,
+
+$$
+y[n] = \overline{y}[n] + y^*[n]
+$$
+
+### Eigen Solution
+
+Where,
+
+$$
+P(\Delta)\overline{y}[n] = 0
+$$
+
+And,
+
+$$
+P(\Delta)y^*[n] = x[n]
+$$
+
+We knew that, $z^n$ is the eigen function of $\Delta$.
+
+Thus, if we want $P(\Delta)\overline{x}[n] = 0$, we can decompose $P(\Delta)$,
+
+$$
+P(\Delta) = \prod_{i=1}^{m} (\Delta - a_i)^{p_i}
+$$
+
+Let's test,
+
+$$
+(\Delta - a) z^n = (1 - \frac{1}{z} - a) z^n = 0
+$$
+
+Which is to say,
+
+$$
+(\Delta - a)
+$$
+
+Corresponds to the solution,
+
+$$
+y_i[n] = (\frac{1}{1-a})^n
+$$
+
+For,
+
+$$
+(\Delta - a)^p
+$$
+
+We have,
+
+$$
+(\Delta - a)^p (n^{\underline{p - 1}} (\frac{1}{1-a})^n) \\
+= (\Delta - a)^{p - 1} (\Delta - a) (n^{\underline{p - 1}} (\frac{1}{1-a})^n) \\
+= (\Delta - a)^{p - 1} ((1-a)(p-1)n^{\underline{p-2}}(\frac{1}{1-a})^n)
+$$
+
+That is to say,
+
+$$
+n^{\underline{p - 1}} (\frac{1}{1-a})^n
+$$
+
+Is eigen to $(\Delta - a)^p$. If we take into account that,
+
+$$
+(\Delta - a)^p n^{\underline{q}} (\frac{1}{1-a})^n = 0 \quad q < p - 1
+$$
+
+So,
+
+$$
+(\Delta - a)^p
+$$
+
+Corresponds to the solution,
+
+$$
+\overline{y_i}[n] = \sum_{q=0}^{q-1} A_{iq} n^{q} (\frac{1}{1-a})^n
+$$
+
+We can remove the decrease factorial since every decrease factorial can be expressed into normal polynomials.
+
+### Special Solution
+
+Just like what we did in the differential equation, a special solution is,
+
+$$
+y^*[n] = P(\Delta)^{-1} x[n]
+$$
+
+And $P(\Delta)^{-1}$ can be expanded into a infinite polynomial of $\Delta$. It's usually hard to solve, but if $x[n]$ is also a polynomial with highest degree $n$, then we can truncate $P(\Delta)^{-1}$ and solve it.
+
+Likewise, if $x[n]$ had exponential terms, we can't do the truncate. But we had shifting theorem back then- and so it is now for the difference operator.
+
+Because,
+
+$$
+\Delta (z^n x[n]) \\
+= x[n] \Delta z^n + z^{n-1} \Delta x[n] \\
+= x[n] (1 - \frac{1}{z}) z^n + \frac{1}{z} z^n \Delta x[n] \\
+= z^n (1 - \frac{1}{z} + \frac{1}{z} \Delta) x[n]
+$$
+
+So we have,
+
+$$
+P(\Delta) z^n x[n] = z^n P(1 - \frac{1}{z} + \frac{1}{z} \Delta) x[n]
+$$
+
+### Example
+
+$$
+8y[n] - 6y[n - 1] + y[n - 2] = n (\frac{1}{2})^n
+$$
+
+Can be converted using $\mathcal{B} = 1 - \Delta$
+
+$$
+\Delta^2 y + 4 \Delta y + 3y = n (\frac{1}{2})^n
+$$
+
+$$
+(\Delta + 3)(\Delta + 1)y = n (\frac{1}{2})^n
+$$
+
+The eigen solution is,
+
+$$
+\overline{y}[n] = A (\frac{1}{4})^n + B (\frac{1}{2})^n
+$$
+
+Then the special solution,
+
+$$
+y^*[n] = \frac{1}{(\Delta + 3)(\Delta + 1)} (n (\frac{1}{2})^n) \\
+= (\frac{1}{2})^n \frac{1}{(2 \Delta + 2)(2 \Delta)}n \\
+= \frac{1}{4} (\frac{1}{2})^n \frac{1}{(\Delta + 1)\Delta} n \\
+= \frac{1}{4} (\frac{1}{2})^n (\frac{1}{\Delta} - \frac{1}{\Delta + 1}) n \\
+= \frac{1}{4} (\frac{1}{2})^n (\frac{1}{2} (n + 1)^{\underline{2}} - (1 - \Delta) n) \\
+= \frac{1}{4} (\frac{1}{2})^n (\frac{1}{2} (n+1)^{\underline{2}} - n + 1) \\
+= \frac{1}{8} (\frac{1}{2})^n (n^2 + n - 2n + 2) \\
+= \frac{1}{8} (\frac{1}{2})^n (n^2 - n + 2)
+$$
+
+Thus we have the solution with two undecided constants based on initial conditions,
+
+$$
+y[n] = \frac{1}{8} (\frac{1}{2})^n (n^2 - n + 2) + A (\frac{1}{4})^n + B (\frac{1}{2})^n
+$$
+
+### Another Example
+
+$$
+2y[n] - y[n - 1] = u[n] (\frac{1}{9})^n + \delta[n]
+$$
+
+And be converted into,
+
+$$
+(\Delta + 1)y[n] = u[n] (\frac{1}{9})^n + \delta[n]
+$$
+
+Obviously,
+
+$$
+\overline{y}[n] = A (\frac{1}{2})^n
+$$
+
+$$
+y^*[n] = \frac{1}{(\Delta + 1)} (u[n] (\frac{1}{9})^n + \delta[n])
+$$
+
+For the second term,
+
+$$
+\frac{1}{\Delta + 1} \delta[n] \\
+= \frac{1}{2} \frac{1}{1 - \frac{\mathcal{B}}{2}} \delta[n] \\
+= \frac{1}{2} \sum_{k=0}^{+\infty} (\frac{1}{2})^k \mathcal{B}^k \delta[n] \\
+= \frac{1}{2} \sum_{k=0}^{+\infty} (\frac{1}{2})^k \delta[n - k] \\
+= \frac{1}{2} (\frac{1}{2})^n u[n]
+$$
+
+For the first term,
+
+$$
+\frac{1}{(\Delta + 1)} (u[n] (\frac{1}{9})^n) \\
+= (\frac{1}{9})^n \frac{1}{9\Delta + 8} u[n] \\
+= (\frac{1}{9})^n \frac{1}{8} u[n]
+$$
+
+Thus,
+
+$$
+y^*[n] = (\frac{1}{8}(\frac{1}{9})^n + \frac{1}{2} (\frac{1}{2})^n)u[n]
+$$

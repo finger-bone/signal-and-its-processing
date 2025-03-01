@@ -1,8 +1,8 @@
 {
-  "label": "Time Domain Analysis",
+  "label": "Time Domain Analysis for Continuous Signals",
   "position": 3,
   "link": {
     "type": "generated-index",
-    "description": "Time Domain Analysis"
+    "description": "Time Domain Analysis for Continuous Signals"
   }
 }

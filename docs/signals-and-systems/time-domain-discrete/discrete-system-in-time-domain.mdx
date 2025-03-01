@@ -1,0 +1,35 @@
+---
+sidebar_position: 3
+---
+
+# Discrete System in Time Domain
+
+We previously defined convolution for discrete signals as,
+
+$$
+x[n] \ast y[n] = \sum_{m=-\infty}^{+\infty} x[m] y[n - m]
+$$
+
+We previous learned that,
+
+$$
+x(t) = x(t) \ast \delta(t)
+$$
+
+Similarly, it's obvious,
+
+$$
+x[n] = x[n] \ast \delta[n]
+$$
+
+For LTI system, we still have response of unit impulse,
+
+$$
+h[n] = \mathcal{S}(\delta[n])
+$$
+
+And, because of linearity,
+
+$$
+y[n] = h[n] \ast x[n]
+$$

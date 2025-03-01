@@ -442,22 +442,16 @@ We can add these equations for the final result.
 
 Please note that the solution does not actually preserve how the $y$ behaves at $0$. That is, it is only correct for $t < 0$ and $t > 0$.
 
-If you want a solution that preserve the behavior at $0$, we need,
+:::info
+
+If you want what happens at $t = 0$, we can always transform the equation into the form,
 
 $$
-D^2y_c+4Dy_c+3y_c = 9tu(t) - 28tu(t) - 21t^2u(t)
+P(D)y_c(t) = S(t)u(t)
 $$
 
-Now the right han be solved using our previous method, so,
+Where $S(0) = 0$.
 
-$$
-y_c = \overline{y}(t) + y^*(t)
-$$
+If you want to preserve what had happened at $t = 0$, just solve this equation for $t > 0$ and $t \leq 0$ separately. And finally ensemble them into one solution with step function.
 
-We can safely conclude,
-
-$$
-y = \overline{y}(t) + y^*(t) +u(t)-3tu(t)+7t^2u(t)
-$$
-
-Now we can solve the respond function. For any system described by differential equation.
+:::
