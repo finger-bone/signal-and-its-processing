@@ -4,4 +4,48 @@ sidebar_position: 2
 
 # Discrete Time Fourier Transform
 
+The last chapter focused on the discrete periodic signal. When the discrete signal is not periodic and spans infinitely, just like what we did, we need to push the DFT to a limit for DTFT.
 
+$$
+x[t] = \frac{1}{N} \sum_{k=0}^{N - 1} X[k] e^{j k \frac{2\pi}{N} t} \\
+X[k] = \sum_{t=0}^{N - 1} x[t] e^{-j k \frac{2\pi}{N} t}
+$$
+
+However, again, we need to use the Cauchy Principle Value, that is, we need, to rewrite it into,
+
+$$
+x[t] = \frac{1}{N} \sum_{k=-N/2}^{N / 2 - 1} X[k] e^{j k \frac{2\pi}{N} t}
+X[k] = \sum_{N / 2}^{N / 2 - 1} x[t] e^{-j k \frac{2\pi}{N} t}
+$$
+
+Because we only need the summation to span over any single period.
+
+Then let's push $N \to +\infty$, the forward transform is,
+
+$$
+\lim_{N \to +\infty} \sum_{N / 2}^{N / 2 - 1} x[t] e^{-j k \frac{2\pi}{N} t}
+\overset{\omega := k \frac{2\pi}{N}}{=} \sum_{-\infty}^{+\infty} x[t] e^{-j \omega t}
+$$
+
+Thus $X[k]$ becomes the continuous,
+
+$$
+X(\omega) = \sum_{-\infty}^{+\infty} x[t] e^{-j \omega t}
+$$
+
+For the inverse transform,
+
+$$
+\lim_{N \to +\infty} \frac{1}{N} \sum_{k=-N/2}^{N / 2 - 1} X[k] e^{j k \frac{2\pi}{N} t} \\
+= \lim_{N \to +\infty} \int_{-\frac{1}{2}N}^{+\frac{1}{2}N - 1} X(k \frac{2\pi}{N}) e^{j k \frac{2\pi}{N} t} \mathrm{d}k \\
+\overset{\omega := k \frac{2\pi}{N}}{=} \frac{1}{2\pi} \int_{-\pi}^{+\pi} X(\omega) e^{j \omega t} \mathrm{d} \omega
+$$
+
+In conclusion, the discrete time fourier transform is,
+
+$$
+x[t] = \frac{1}{2\pi} \int_{-\pi}^{+\pi} X(\omega) e^{j \omega t} \mathrm{d} \omega \\
+X(\omega) = \sum_{t=-\infty}^{+\infty} x[t] e^{-j \omega t}
+$$
+
+DTFT and DFT are commonly used in signal processing, but not the analysis for systems. Usually, we use z transform instead, since it's more general. So we will not introduce there properties here.

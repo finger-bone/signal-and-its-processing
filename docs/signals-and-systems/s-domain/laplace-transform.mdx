@@ -8,7 +8,18 @@ The laplace transform is an extension to the fourier transform. Because for some
 
 ## Laplace Transform
 
-Laplace transform use $s = \sigma + j\omega$ to replace $j\omega$. So the transformation is.
+Laplace transform use $s = \sigma + j\omega$ to replace $j\omega$. So the transformation can be extended from fourier transform,
+
+$$
+X(\omega) = \int_{-\infty}^{+\infty} x(t) e^{-(j \omega + \sigma) t} \mathrm{d} \\
+= \int_{-\infty}^{+\infty} x(t) e^{-st} \mathrm{d}t \\
+$$
+
+And,
+
+$$
+x(t) = \frac{1}{2\pi j} \int_{\sigma-j\infty}^{\sigma+j\infty} X(s) e^{st} \mathrm{d}s
+$$
 
 In signals and systems, we usually use single-side Laplace transform. This is because we don't usually care about the negative side.
 
@@ -18,13 +29,13 @@ $$
 
 Please note that it is $-0$.
 
-And reversely,
+And inversely,
 
 $$
-f(t) = \frac{1}{2\pi} \int_{\sigma-j\infty}^{\sigma+j\infty} L(s) e^{st} \mathrm{d}s
+f(t) = \frac{1}{2\pi j} \int_{\sigma-j\infty}^{\sigma+j\infty} L(s) e^{st} \mathrm{d}s
 $$
 
-This is the laplace reverse transform.
+This is the laplace inverse transform.
 
 It's obvious that laplace transform does not always converge. If we use single-side laplace transform, it is guaranteed to have the region of converge in form of,
 
@@ -50,7 +61,7 @@ However, the region $Re(s) > \max(\sigma_a, \sigma_b)$ is the only part that gua
 ### Shifting Time is Shifting Phase
 
 $$
-f(t) \xrightarrow{\mathcal{L}} L(s)
+f(t)u(t) \xrightarrow{\mathcal{L}} L(s)
 $$
 
 Then,
