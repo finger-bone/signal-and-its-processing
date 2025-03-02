@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+---
+
+# Discrete Fourier Transform
+
+There are actually two types of discrete time fourier transform, discrete fourier transform (DFT) and discrete time fourier transform (DTFT).
+
+The former is in fact the fourier series for a discrete signal. The latter is the fourier transform on a discrete signal. We introduce DFT first.
+
+## DFT
+
+Again, DFT is a fourier series, just called discrete fourier transform.
+
+For continuous, periodic signal, we had,
+
+$$
+x(t) = \sum_{k=-\infty}^{+\infty} a_k e^{j k \omega t}
+$$
+
+$$
+a_k = \frac{1}{T} \int_{0}^{T} x(t) e^{-j k \omega t} \mathrm{d}t
+$$
+
+The discrete signal is equal to,
+
+$$
+x_s(t) = \sum_{k=0}^{N - 1} x[k] \delta(t - k)
+$$
+
+So,
+
+$$
+a_k = \frac{1}{T} \int_{0}^{T} x_s(t) e^{-j k \omega t} \mathrm{d}t = \frac{1}{T} \sum_{k=0}^{N - 1} x[k] e^{-j k \omega t}
+$$
+
+Sometimes, we may process signals with a given range (image, for example). Assume it has a rang from $0$ to $N$, we can treat it as a signal with a period of $N$ as well.
+
+We note,
+
+$$
+X[k] = \frac{1}{N} \sum_{k=0}^{N - 1} x[k] e^{-j k \omega t}
+$$
+
+As the discrete fourier transform.
+
+However we are not done yet, consider,
+
+$$
+x[t] = \sum_{k=-\infty}^{+\infty} a_k e^{j k \omega t}
+$$
+
+We would notice that,
+
+$$
+X[k + N] = \sum_{k=0}^{N} x[k] e^{-j \omega (k + N) t} \\
+= e^{-j \omega N t } \sum_{k=-\infty}^{+\infty} a_k e^{j k \omega t}
+$$
+
+So $X[k]$ is periodic as well, thus, $x[t]$ after the reverse transform is like not to converge.
+
+The reason is that, consider the discrete complex exponential, we want the period of $N$ and so,
+
+$$
+e^{j \omega N} = 1
+$$
+
+There exists $N$ if and only if $\omega = 2\pi \frac{p}{q}$, suppose $p$ and $q$ have no common divisor, and thus,
+
+$$
+N = \min_k k \frac{q}{p} = q
+$$
+
+Which is to say that, the period is only related to the denominator. So it's obvious that, for,
+
+$$
+x[t] = \sum_{k=-\infty}^{+\infty} a_k e^{j k \frac{2\pi}{N} t}
+$$
+
+If we sum over $-\infty$ to $+\infty$, we are repeating the same base signal over and over again.
+
+We only need to sum each signal once, and so,
+
+$$
+x[t] = \sum_{k=0}^{N - 1} a_k e^{j k \frac{2\pi}{N} t}
+$$
+
+Is the legit result.
+
+In conclusion, we had,
+
+$$
+x[t] = \sum_{k=0}^{N - 1} X[k] e^{j k \frac{2\pi}{N} t} \\
+X[k] = \frac{1}{N} \sum_{k=0}^{N - 1} x[k] e^{-j k \omega t}
+$$
+
+However, for correspondence, because we had $\frac{1}{2 \pi}$ for the fourier inverse transform, and thus, we usually use the following form of DFT,
+
+$$
+x[t] = \frac{1}{N} \sum_{k=0}^{N - 1} X[k] e^{j k \frac{2\pi}{N} t} \\
+X[k] = \sum_{t=0}^{N - 1} x[t] e^{-j k \frac{2\pi}{N} t}
+$$
+
+The two are identical.
+
+This will also come in handy in the next chapter where we need to push $X[k]$ to a continuous limit, and thus, we need a density divider for $x[t]$.
