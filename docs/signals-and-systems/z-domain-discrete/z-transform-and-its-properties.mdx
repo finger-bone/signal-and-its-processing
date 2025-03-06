@@ -74,7 +74,7 @@ $$
 
 And $C(e^\sigma)$ is a circle with radius $e^\sigma$. The value of $\sigma$ is dependent on the region of convergence.
 
-For convenience, if we write $C$, we means that a circle of radius one.
+For convenience, if we write $C$, it means a circle of radius one.
 
 :::info
 
@@ -408,28 +408,30 @@ x[t] \xrightarrow{\mathcal{Z}} X(z) \quad e^{\sigma_0} < |z| \\
 y[t] \xrightarrow{\mathcal{Z}} Y(z) \quad e^{\sigma_1} < |z|
 $$
 
-Then,
+Then, we define a single-side convolution,
 
 $$
-x[t] \ast y[t] = \sum_{m = -\infty}^{+\infty} x[t - m] y[m]
+x[t] \ast y[t] = \sum_{m = 0}^{+\infty} x[t - m] y[m]
 $$
 
 Perform z transform on the both sides,
 
 $$
 \mathcal{Z}(x[t] \ast y[t]) = \sum_{t = 0}^{+\infty} \sum_{m = -\infty}^{+\infty} x[t - m] y[m] z^{-t} \\
-= \sum_{t = 0}^{+\infty} \sum_{m = -\infty}^{+\infty} x[t - m] z^{-(t - m)} y[m] z^{-m} \\
+= \sum_{t = 0}^{+\infty} \sum_{m = 0}^{+\infty} x[t - m] z^{-(t - m)} y[m] z^{-m} \\
 = X(z) Y(z)
 $$
 
 And thus,
 
 $$
-x[t] \ast y[t] \xrightarrow{\mathcal{Z}} X(z) Y(z) \quad e^{\sigma_0 + \sigma_1} < |z|
+x[t] \ast y[t] \xrightarrow{\mathcal{Z}} X(z) Y(z) \quad \max{e^{\sigma_0}, e^{\sigma_1}} < |z|
 $$
 
 For two side transform,
 
 $$
-x[t] \ast y[t] \xrightarrow{\pm \mathcal{Z}} X(z) Y(z) \quad e^{\sigma_0 + \sigma_1} < |z| < e^{\beta_0 + \beta_1}
+x[t] \ast y[t] \xrightarrow{\pm \mathcal{Z}} X(z) Y(z) \quad \max{e^{\sigma_0}, e^{\sigma_1}} < |z| <  \min{e^{\beta_0}, e^{\beta_1}}
 $$
+
+In both cases, the region of convergence is the intersect of the two old regions of convergence.
