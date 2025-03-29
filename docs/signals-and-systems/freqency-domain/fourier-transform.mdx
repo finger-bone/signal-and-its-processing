@@ -257,7 +257,7 @@ $$
 = \int_{-\epsilon}^{+\epsilon} \frac{1}{2\epsilon} e^{-j \omega t} \mathrm{d}t \\
 = -\frac{1}{2\epsilon} \int_{-j\omega\epsilon}^{+j\omega\epsilon} e^{-j \omega t} \mathrm{d}(-j\omega t) \\
 = \frac{1}{2\epsilon j \omega} (e^{j \omega \epsilon} - e^{-j \omega \epsilon}) \\
-= \frac{\sin(\omega \epsilon)}{\omega \epsilon}
+= 2\epsilon \frac{\sin(\omega \epsilon)}{\omega \epsilon}
 $$
 
 This function is important. Thus we define $\text{sinc}$ function,
@@ -271,5 +271,5 @@ $$
 Thus,
 
 $$
-\text{Rect}_\epsilon(t) = \text{sinc}(\frac{\omega \epsilon}{\pi})
+\text{Rect}_\epsilon(t) = 2\epsilon \text{sinc}(\frac{\omega \epsilon}{\pi})
 $$
